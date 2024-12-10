@@ -1,0 +1,74 @@
+<div class="commit-generator-container">
+  <mat-card class="commit-generator-card">
+    <mat-card-header>
+      <mat-card-title>Generate Commit Message</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="commitForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Commit Message Format</mat-label>
+          <mat-select formControlName="format">
+            <mat-option *ngFor="let format of commitFormats" [value]="format">
+              {{format}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Local Repository Path</mat-label>
+          <input matInput formControlName="repoPath" placeholder="Enter repository path">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>AI Model</mat-label>
+          <mat-select formControlName="aiModel">
+            <mat-option *ngFor="let model of aiModels" [value]="model.id">
+              {{model.name}} ({{model.isOnline ? 'Online' : 'Offline'}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Commit Message Style</mat-label>
+          <mat-select formControlName="style">
+            <mat-option *ngFor="let style of commitStyles" [value]="style">
+              {{style}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Language</mat-label>
+          <mat-select formControlName="language">
+            <mat-option *ngFor="let lang of languages" [value]="lang">
+              {{lang}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="!commitForm.valid || isLoading">
+          Generate Commit Message
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="commitResult" class="commit-result-card">
+    <mat-card-header>
+      <mat-card-title>Generated Commit Message</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="commit-result-content">
+      <div class="commit-message-box">
+        <h3>English</h3>
+        <p>{{commitResult.englishMessage}}</p>
+      </div>
+      <div class="commit-message-box">
+        <h3>{{commitForm.get('language')?.value}}</h3>
+        <p>{{commitResult.translatedMessage}}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+</div>
+
