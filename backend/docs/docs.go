@@ -14,7 +14,79 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/validate": {
+            "get": {
+                "description": "Verifica se o caminho fornecido é válido e contém um repositório Git",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Validation"
+                ],
+                "summary": "Valida um repositório local",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Caminho do repositório",
+                        "name": "path",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/validation.ValidationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ValidationError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ValidationError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.ValidationError": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "validation.ValidationResult": {
+            "type": "object",
+            "properties": {
+                "currentBranch": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "isValid": {
+                    "type": "boolean"
+                },
+                "lastModified": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
@@ -23,8 +95,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Backend API",
-	Description:      "API para geração de commits e tradução.",
+	Title:            "SmartCommit API",
+	Description:      "API para geração de commits, tradução e validação de repositórios.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
