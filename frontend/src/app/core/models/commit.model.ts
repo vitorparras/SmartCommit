@@ -32,6 +32,3 @@ export interface AIModel {
   name: string;
   isOnline: boolean;
 }
-
-
-
