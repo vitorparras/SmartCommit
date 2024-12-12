@@ -16,7 +16,7 @@ interface Language {
 })
 export class LanguageModalComponent {
   languages: Language[] = [
-    { code: 'en', name: 'English', nativeName: 'English', englishName: 'English' },
+    { code: 'us', name: 'English', nativeName: 'English', englishName: 'English' },
     { code: 'br', name: 'Português', nativeName: 'Português', englishName: 'Portuguese' },
     { code: 'es', name: 'Español', nativeName: 'Español', englishName: 'Spanish' },
     { code: 'fr', name: 'Français', nativeName: 'Français', englishName: 'French' },
@@ -40,7 +40,7 @@ export class LanguageModalComponent {
 
   isCurrentLanguage(langCode: string): boolean {
     return this.translate.currentLang === langCode || 
-           (!this.translate.currentLang && langCode === 'en');
+           (!this.translate.currentLang && langCode === 'us');
   }
 }
 

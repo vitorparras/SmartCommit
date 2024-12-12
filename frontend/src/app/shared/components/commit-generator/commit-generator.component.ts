@@ -34,11 +34,11 @@ export class CommitGeneratorComponent implements OnInit {
   ];
 
   languages = [
-    { code: 'en', name: 'English' },
+    { code: 'us', name: 'English' },
     { code: 'es', name: 'Español' },
     { code: 'fr', name: 'Français' },
     { code: 'de', name: 'Deutsch' },
-    { code: 'pt-BR', name: 'Português (Brasil)' }
+    { code: 'br', name: 'Português (Brasil)' }
   ];
 
   constructor(
@@ -70,7 +70,7 @@ export class CommitGeneratorComponent implements OnInit {
 
   ngOnInit() {
     // Set initial language
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang('us');
   }
 
   selectGitFolder() {

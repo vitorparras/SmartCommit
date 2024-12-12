@@ -4,7 +4,7 @@
     <span class="spacer"></span>
     <button mat-button (click)="openLanguageModal()" class="language-button">
       <img 
-        [src]="'assets/flags/' + (translate.currentLang || 'en').split('-')[0] + '.svg'"
+        [src]="'assets/flags/' + (translate.currentLang || 'us').split('-')[0] + '.svg'"
         [alt]="translate.currentLang + ' flag'"
         (error)="handleImageError($event)"
         class="flag-icon"

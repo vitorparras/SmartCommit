@@ -24,7 +24,7 @@
   "COMMIT_MESSAGE_LANGUAGE_TOOLTIP": "Defina o idioma das mensagens de commit geradas",
   "GENERATE_COMMIT_MESSAGE": "Gerar Mensagem de Commit",
   "GENERATED_COMMIT_MESSAGE": "Mensagem de Commit Gerada",
-  "ENGLISH": "Inglês",
+  "ENGLISH": "Português (Brasil)",
   "COPY": "Copiar",
   "SELECT_INDEX_FILE": "Selecione o arquivo README da pasta do repositório",
   "SELECT_INDEX_FILE_SUCCESS": "Arquivo selecionado com sucesso",

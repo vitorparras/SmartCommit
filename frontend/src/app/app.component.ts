@@ -16,19 +16,19 @@ interface Language {
 })
 export class AppComponent implements OnInit {
   languages: Language[] = [
-    { code: 'en', name: 'English', nativeName: 'English' },
+    { code: 'us', name: 'English', nativeName: 'English' },
     { code: 'es', name: 'Spanish', nativeName: 'Español' },
     { code: 'fr', name: 'French', nativeName: 'Français' },
     { code: 'de', name: 'German', nativeName: 'Deutsch' },
-    { code: 'pt-BR', name: 'Portuguese', nativeName: 'Português' }
+    { code: 'br', name: 'Portuguese', nativeName: 'Português' }
   ];
 
   constructor(
     public translate: TranslateService,
     private dialog: MatDialog
   ) {
-    translate.setDefaultLang('en');
-    translate.addLangs(['en', 'es', 'fr', 'de', 'pt-BR']);
+    translate.setDefaultLang('us');
+    translate.addLangs(['us', 'es', 'fr', 'de', 'br']);
   }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
   }
 
   getCurrentLanguageName(): string {
-    const currentLang = this.translate.currentLang || 'en';
+    const currentLang = this.translate.currentLang || 'us';
     const language = this.languages.find(lang => lang.code === currentLang);
     return language ? language.nativeName : 'English';
   }
