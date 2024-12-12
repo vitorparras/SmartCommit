@@ -1,3 +1,5 @@
+@import '~material-design-icons/iconfont/material-icons.css';
+
 /* Reset básico */
 *,
 *::before,
@@ -94,5 +96,20 @@ video {
 /* Remover estilo padrão de figuras */
 figure {
   margin: 0;
+}
+
+.language-modal {
+  .mat-mdc-dialog-container {
+    padding: 0;
+  }
+
+  .mdc-dialog__surface {
+    border-radius: 8px !important;
+    overflow: hidden;
+  }
+
+  .mat-mdc-dialog-content {
+    --mdc-dialog-supporting-text-color: inherit;
+  }
 }
 

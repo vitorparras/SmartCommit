@@ -2,61 +2,92 @@
   <!-- Configuration Section -->
   <div class="section">
     <div class="section-header" (click)="configExpanded = !configExpanded">
-      <span class="section-title">Configuration</span>
+      <span class="section-title">{{ 'CONFIGURATION' | translate }}</span>
       <button class="expand-button">
-        <i class="material-icons">{{ configExpanded ? 'expand_less' : 'expand_more' }}</i>
+        <mat-icon>{{ configExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
       </button>
     </div>
     
     <div class="section-content" [class.expanded]="configExpanded">
       <form [formGroup]="commitForm">
         <div class="form-group">
-          <label>Commit Message Format</label>
-          <select formControlName="format">
-            <option value="Angular Guidelines">Angular Guidelines</option>
-            <option value="Conventional Commits">Conventional Commits</option>
-            <option value="Custom">Custom</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Repository Path</label>
-          <div class="repository-input">
-            <input type="text" formControlName="repoPath" readonly placeholder="Select Git repository folder">
-            <button type="button" class="browse-button" (click)="selectFolder()">
-              Browse
-            </button>
+          <label>{{ 'COMMIT_MESSAGE_FORMAT' | translate }}</label>
+          <div class="input-container">
+            <select formControlName="format">
+              <option value="Angular Guidelines">{{ 'ANGULAR_GUIDELINES' | translate }}</option>
+              <option value="Conventional Commits">{{ 'CONVENTIONAL_COMMITS' | translate }}</option>
+              <option value="Custom">{{ 'CUSTOM' | translate }}</option>
+            </select>
+            <mat-icon 
+              class="help-icon" 
+              [matTooltip]="'COMMIT_MESSAGE_FORMAT_TOOLTIP' | translate"
+              matTooltipPosition="right"
+            >help_outline</mat-icon>
           </div>
         </div>
 
         <div class="form-group">
-          <label>AI Model</label>
-          <select formControlName="aiModel">
-            <option *ngFor="let model of aiModels" [value]="model.id">
-              {{ model.name }} 
-              <span class="model-status" [class.online]="model.isOnline">
-                ({{ model.isOnline ? 'Online' : 'Offline' }})
-              </span>
-            </option>
-          </select>
+          <label>{{ 'REPOSITORY_PATH' | translate }}</label>
+          <div class="input-container">
+            <input type="text" formControlName="repoPath" readonly [placeholder]="'SELECT_README_FILE' | translate">
+            <button type="button" class="browse-button" (click)="selectGitFolder()">
+              {{ 'SELECT_README' | translate }}
+            </button>
+            <mat-icon 
+              class="help-icon" 
+              [matTooltip]="'REPOSITORY_PATH_TOOLTIP' | translate"
+              matTooltipPosition="right"
+            >help_outline</mat-icon>
+          </div>
+          <input #fileInput type="file" (change)="handleFileSelection($event)" style="display: none;">
         </div>
 
         <div class="form-group">
-          <label>Message Style</label>
-          <select formControlName="style">
-            <option value="Descriptive">Descriptive</option>
-            <option value="Concise">Concise</option>
-          </select>
+          <label>{{ 'AI_MODEL' | translate }}</label>
+          <div class="input-container">
+            <select formControlName="aiModel">
+              <option *ngFor="let model of aiModels" [value]="model.id">
+                {{ model.name }} 
+                <span class="model-status" [class.online]="model.isOnline">
+                  ({{ (model.isOnline ? 'ONLINE' : 'OFFLINE') | translate }})
+                </span>
+              </option>
+            </select>
+            <mat-icon 
+              class="help-icon" 
+              [matTooltip]="'AI_MODEL_TOOLTIP' | translate"
+              matTooltipPosition="right"
+            >help_outline</mat-icon>
+          </div>
         </div>
 
         <div class="form-group">
-          <label>Language</label>
-          <select formControlName="language">
-            <option value="English">English</option>
-            <option value="French">French</option>
-            <option value="Spanish">Spanish</option>
-            <option value="German">German</option>
-          </select>
+          <label>{{ 'MESSAGE_STYLE' | translate }}</label>
+          <div class="input-container">
+            <select formControlName="style">
+              <option value="Descriptive">{{ 'DESCRIPTIVE' | translate }}</option>
+              <option value="Concise">{{ 'CONCISE' | translate }}</option>
+            </select>
+            <mat-icon 
+              class="help-icon" 
+              [matTooltip]="'MESSAGE_STYLE_TOOLTIP' | translate"
+              matTooltipPosition="right"
+            >help_outline</mat-icon>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>{{ 'COMMIT_MESSAGE_LANGUAGE' | translate }}</label>
+          <div class="input-container">
+            <select formControlName="language">
+              <option *ngFor="let lang of languages" [value]="lang.name">{{ lang.name }}</option>
+            </select>
+            <mat-icon 
+              class="help-icon" 
+              [matTooltip]="'COMMIT_MESSAGE_LANGUAGE_TOOLTIP' | translate"
+              matTooltipPosition="right"
+            >help_outline</mat-icon>
+          </div>
         </div>
       </form>
     </div>
@@ -64,29 +95,29 @@
 
   <!-- Generate Button -->
   <button class="generate-button" (click)="onSubmit()" [disabled]="!commitForm.valid || isLoading">
-    Generate Commit Message
+    {{ 'GENERATE_COMMIT_MESSAGE' | translate }}
   </button>
 
   <!-- Results Section -->
   <div class="section result-section" *ngIf="commitResult">
     <div class="section-header">
-      <span class="section-title">Generated Commit Message</span>
+      <span class="section-title">{{ 'GENERATED_COMMIT_MESSAGE' | translate }}</span>
     </div>
     
     <div class="section-content expanded">
       <div class="commit-messages">
         <div class="message-box">
-          <h3>English</h3>
+          <h3>{{ 'ENGLISH' | translate }}</h3>
           <p>{{ commitResult.englishMessage }}</p>
           <button class="copy-button" (click)="copyToClipboard(commitResult.englishMessage)">
-            Copy
+            {{ 'COPY' | translate }}
           </button>
         </div>
         <div class="message-box">
           <h3>{{ commitForm.get('language')?.value }}</h3>
           <p>{{ commitResult.translatedMessage }}</p>
           <button class="copy-button" (click)="copyToClipboard(commitResult.translatedMessage)">
-            Copy
+            {{ 'COPY' | translate }}
           </button>
         </div>
       </div>

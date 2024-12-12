@@ -1,14 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { AIModel, CommitConfig, CommitFormat, CommitResult, CommitStyle, Language } from 'src/app/core/models/commit.model';
-import { AIModelService } from 'src/app/core/services/ai-model.service';
-import { CommitService } from 'src/app/core/services/commit.service';
-import { RepositoryService } from 'src/app/core/services/repository.service';
 import { ApiKeyModalComponent } from '../api-key-modal/api-key-modal.component';
+import { TranslateService } from '@ngx-translate/core';
+import { CommitService } from 'src/app/core/services/commit.service';
 import { ApiKeyService } from 'src/app/core/services/api-key.service';
+
+interface AIModel {
+  id: string;
+  name: string;
+  isOnline: boolean;
+}
 
 @Component({
   selector: 'app-commit-generator',
@@ -16,6 +19,8 @@ import { ApiKeyService } from 'src/app/core/services/api-key.service';
   styleUrls: ['./commit-generator.component.scss']
 })
 export class CommitGeneratorComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  
   commitForm: FormGroup;
   configExpanded = true;
   isLoading = false;
@@ -28,12 +33,21 @@ export class CommitGeneratorComponent implements OnInit {
     { id: 'local', name: 'Local AI', isOnline: false }
   ];
 
+  languages = [
+    { code: 'en', name: 'English' },
+    { code: 'es', name: 'Español' },
+    { code: 'fr', name: 'Français' },
+    { code: 'de', name: 'Deutsch' },
+    { code: 'pt-BR', name: 'Português (Brasil)' }
+  ];
+
   constructor(
     private fb: FormBuilder,
     private commitService: CommitService,
     private apiKeyService: ApiKeyService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private translate: TranslateService
   ) {
     this.commitForm = this.fb.group({
       format: ['Angular Guidelines', Validators.required],
@@ -54,45 +68,37 @@ export class CommitGeneratorComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Set initial language
+    this.translate.setDefaultLang('en');
+  }
 
-  async selectFolder() {
-    try {
-      //const dirHandle = await window.showDirectoryPicker();
-      const gitPath ="testess" //await this.findGitRepository(dirHandle);
-      
-      if (gitPath) {
-        this.commitForm.patchValue({ repoPath: gitPath });
+  selectGitFolder() {
+    this.fileInput.nativeElement.click();
+  }
+
+  handleFileSelection(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      if (file.name.toLowerCase() === 'readme.md') {
+        this.commitForm.patchValue({ repoPath: this.translate.instant('SELECT_INDEX_FILE_SUCCESS') });
       } else {
-        this.snackBar.open('Selected folder is not a Git repository', 'Close', {
+        this.snackBar.open(this.translate.instant('SELECT_README_FILE'), this.translate.instant('CLOSE'), {
           duration: 3000
         });
       }
-    } catch (error) {
-      console.error('Error selecting folder:', error);
-      this.snackBar.open('Failed to select folder', 'Close', {
-        duration: 3000
-      });
-    }
-  }
-
-  private async findGitRepository(dirHandle: FileSystemDirectoryHandle): Promise<string | null> {
-    try {
-      await dirHandle.getDirectoryHandle('.git');
-      return dirHandle.name;
-    } catch {
-      // If .git folder is not found, return null
-      return null;
     }
   }
 
   async onSubmit() {
     if (this.commitForm.valid) {
       this.isLoading = true;
+      this.configExpanded = false; // Collapse configuration section
       try {
         this.commitResult = await this.commitService.generateCommitMessage(this.commitForm.value);
       } catch (error) {
-        this.snackBar.open('Error generating commit message', 'Close', {
+        this.snackBar.open(this.translate.instant('ERROR_GENERATING_COMMIT'), this.translate.instant('CLOSE'), {
           duration: 3000
         });
       } finally {
@@ -111,9 +117,10 @@ export class CommitGeneratorComponent implements OnInit {
 
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
-      this.snackBar.open('Copied to clipboard', 'Close', {
+      this.snackBar.open(this.translate.instant('COPIED_TO_CLIPBOARD'), this.translate.instant('CLOSE'), {
         duration: 2000
       });
     });
   }
 }
+

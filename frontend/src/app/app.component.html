@@ -1,0 +1,20 @@
+<div class="app-container">
+  <mat-toolbar>
+    <span>{{ 'COMMIT_MESSAGE_GENERATOR' | translate }}</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="openLanguageModal()" class="language-button">
+      <img 
+        [src]="'assets/flags/' + (translate.currentLang || 'en').split('-')[0] + '.svg'"
+        [alt]="translate.currentLang + ' flag'"
+        (error)="handleImageError($event)"
+        class="flag-icon"
+      >
+      <span>{{ getCurrentLanguageName() }}</span>
+    </button>
+  </mat-toolbar>
+  
+  <main>
+    <app-commit-generator></app-commit-generator>
+  </main>
+</div>
+

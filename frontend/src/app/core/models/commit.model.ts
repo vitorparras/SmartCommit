@@ -32,3 +32,10 @@ export interface AIModel {
   name: string;
   isOnline: boolean;
 }
+
+export interface LanguageSys {
+  code: string;
+  name: string;
+  nativeName: string;
+  flag: string;
+}

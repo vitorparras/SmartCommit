@@ -1,28 +1,70 @@
-import { Component } from '@angular/core';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { LanguageModalComponent } from './shared/components/language-modal/language-modal.component';
+
+interface Language {
+  code: string;
+  name: string;
+  nativeName: string;
+}
+
 @Component({
   selector: 'app-root',
-  template: `
-    <div class="app-container">
-      <mat-toolbar color="primary">
-        <span>Commit Message Generator</span>
-      </mat-toolbar>
-      <main>
-        <app-commit-generator></app-commit-generator>
-      </main>
-    </div>
-  `,
-  styles: [`
-    .app-container {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    main {
-      flex: 1;
-      padding: 20px;
-    }
-  `]
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent { }
+export class AppComponent implements OnInit {
+  languages: Language[] = [
+    { code: 'en', name: 'English', nativeName: 'English' },
+    { code: 'es', name: 'Spanish', nativeName: 'Español' },
+    { code: 'fr', name: 'French', nativeName: 'Français' },
+    { code: 'de', name: 'German', nativeName: 'Deutsch' },
+    { code: 'pt-BR', name: 'Portuguese', nativeName: 'Português' }
+  ];
+
+  constructor(
+    public translate: TranslateService,
+    private dialog: MatDialog
+  ) {
+    translate.setDefaultLang('en');
+    translate.addLangs(['en', 'es', 'fr', 'de', 'pt-BR']);
+  }
+
+  ngOnInit() {
+    const savedLang = localStorage.getItem('selectedLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    } else {
+      this.openLanguageModal();
+    }
+  }
+
+  openLanguageModal() {
+    const dialogRef = this.dialog.open(LanguageModalComponent, {
+      width: '400px',
+      maxWidth: '90vw',
+      panelClass: 'language-modal',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.translate.use(result);
+        localStorage.setItem('selectedLanguage', result);
+      }
+    });
+  }
+
+  getCurrentLanguageName(): string {
+    const currentLang = this.translate.currentLang || 'en';
+    const language = this.languages.find(lang => lang.code === currentLang);
+    return language ? language.nativeName : 'English';
+  }
+
+  handleImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.style.display = 'none';
+  }
+}
 

@@ -46,15 +46,15 @@
 
   &.expanded {
     max-height: 1000px;
+    padding: 1rem;
   }
 }
 
 .form-group {
-  padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 1rem;
 
   &:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
   }
 
   label {
@@ -63,8 +63,16 @@
     color: #666;
     font-size: 0.9rem;
   }
+}
 
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 32px;
   select, input {
+    flex: 1;
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ddd;
@@ -79,35 +87,38 @@
     }
   }
 
-  .model-status {
-    font-size: 0.9em;
+  .help-icon {
+    position: absolute;
+    right: 0;
     color: #666;
+    cursor: help;
+    font-size: 20px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
 
-    &.online {
-      color: #2196f3;
+    &:hover {
+      color: #4a5af7;
     }
   }
-}
 
-.repository-input {
-  display: flex;
-  gap: 1rem;
+  .browse-button {
+    flex-shrink: 0;
+    padding: 0.75rem 1rem;
+    background: #4a5af7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
 
-  input {
-    flex: 1;
-  }
-}
-
-.browse-button {
-  padding: 0.75rem 1.5rem;
-  background: #4a5af7;
-  color: white;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background: #3a48d9;
+    &:hover {
+      background: #3a48d9;
+    }
   }
 }
 
@@ -116,9 +127,11 @@
   padding: 1rem;
   background: #4a5af7;
   color: white;
+  border: none;
   border-radius: 4px;
   font-weight: 500;
   margin: 1rem 0;
+  cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover:not(:disabled) {
@@ -132,7 +145,6 @@
 }
 
 .commit-messages {
-  padding: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
@@ -164,6 +176,7 @@
     padding: 0.5rem 1rem;
     background: #4a5af7;
     color: white;
+    border: none;
     border-radius: 4px;
     font-size: 0.9rem;
     opacity: 0;

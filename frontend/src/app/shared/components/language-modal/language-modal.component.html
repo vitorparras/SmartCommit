@@ -1,0 +1,32 @@
+<div class="language-modal-container">
+  <div class="modal-header">
+    <h2>{{ 'SELECT_YOUR_LANGUAGE' | translate }}</h2>
+    <p>{{ 'LANGUAGE_SELECTION_SUBTITLE' | translate }}</p>
+  </div>
+
+  <mat-dialog-content>
+    <div class="language-options">
+      <div 
+        *ngFor="let lang of languages" 
+        class="language-option"
+        [class.selected]="isCurrentLanguage(lang.code)"
+        (click)="selectLanguage(lang.code)"
+      >
+        <div class="language-content">
+          <div class="flag">
+            <img 
+              [src]="'assets/flags/' + lang.code.toLowerCase().split('-')[0] + '.svg'"
+              [alt]="lang.name + ' flag'"
+              (error)="handleImageError($event)"
+            >
+          </div>
+          <div class="language-details">
+            <span class="primary-text">{{ lang.nativeName }}</span>
+            <span class="secondary-text">{{ lang.englishName }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>
+
