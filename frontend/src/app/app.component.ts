@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     { code: 'de', name: 'German', nativeName: 'Deutsch' },
     { code: 'br', name: 'Portuguese', nativeName: 'Português' }
   ];
+  flagVisible = true;
 
   constructor(
     public translate: TranslateService,
@@ -56,15 +57,21 @@ export class AppComponent implements OnInit {
     });
   }
 
+  getCurrentLanguage(): Language | undefined {
+    const currentLang = this.translate.currentLang || 'us';
+    return this.languages.find(lang => lang.code === currentLang);
+  }
+
   getCurrentLanguageName(): string {
     const currentLang = this.translate.currentLang || 'us';
     const language = this.languages.find(lang => lang.code === currentLang);
     return language ? language.nativeName : 'English';
   }
 
-  handleImageError(event: Event): void {
+  handleImageError(event: Event, langCode: string): void {
     const img = event.target as HTMLImageElement;
     img.style.display = 'none';
+    this.flagVisible = false;
   }
 }
 
