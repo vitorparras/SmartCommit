@@ -15,10 +15,11 @@
       <div class="input-container">
         <input
           id="apiKey"
-          type="password"
+          [type]="showKey ? 'txt' : 'password'"
           [(ngModel)]="apiKey"
           [placeholder]="'API_KEY_PLACEHOLDER' | translate"
           class="api-key-input"
+
         >
         <button 
           class="toggle-visibility" 
