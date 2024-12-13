@@ -32,5 +32,7 @@
   "ERROR_GENERATING_COMMIT": "Erro ao gerar a mensagem de commit",
   "COPIED_TO_CLIPBOARD": "Mensagem copiada para a área de transferência",
   "SELECT_README_FILE": "Escolha o arquivo README na pasta do seu repositório",
-  "SELECT_README": "Selecionar README"
+  "SELECT_README": "Selecionar README",
+  "CONFIGURATION_SUBTITLE": "Configure as opções para personalizar a geração das mensagens de commit.",
+  "RESULT_SUBTITLE": "Mensagem gerada com sucesso! Copie-a para usar em seus commits."
 }

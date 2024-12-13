@@ -1,7 +1,6 @@
 <div class="app-container">
-  <mat-toolbar>
+  <header class="header">
     <span class="title">{{ 'COMMIT_MESSAGE_GENERATOR' | translate }}</span>
-    <span class="spacer"></span>
     <button mat-button (click)="openLanguageModal()" class="language-button">
       <div class="language-content">
         <ng-container *ngIf="getCurrentLanguage() as lang">
@@ -16,7 +15,7 @@
         <span class="language-text">{{ getCurrentLanguageName() }}</span>
       </div>
     </button>
-  </mat-toolbar>
+  </header>
   
   <main>
     <app-commit-generator></app-commit-generator>

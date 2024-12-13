@@ -32,5 +32,7 @@
   "ERROR_GENERATING_COMMIT": "Error generating commit message",
   "COPIED_TO_CLIPBOARD": "Message copied to clipboard",
   "SELECT_README_FILE": "Choose the README file in your repository folder",
-  "SELECT_README": "Select README"
+  "SELECT_README": "Select README",
+  "CONFIGURATION_SUBTITLE": "Configure the options to customize the generation of commit messages.",
+  "RESULT_SUBTITLE": "Message successfully generated! Copy it to use in your commits."
 }

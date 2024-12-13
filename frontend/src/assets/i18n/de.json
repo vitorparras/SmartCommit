@@ -32,5 +32,7 @@
   "ERROR_GENERATING_COMMIT": "Fehler beim Generieren der Commit-Nachricht",
   "COPIED_TO_CLIPBOARD": "Nachricht in die Zwischenablage kopiert",
   "SELECT_README_FILE": "Wählen Sie die README-Datei in Ihrem Repository-Ordner aus",
-  "SELECT_README": "README auswählen"
+  "SELECT_README": "README auswählen",
+  "CONFIGURATION_SUBTITLE": "Konfigurieren Sie die Optionen, um die Erstellung von Commit-Nachrichten anzupassen.",
+  "RESULT_SUBTITLE": "Nachricht erfolgreich generiert! Kopieren Sie sie, um sie in Ihren Commits zu verwenden."
 }
