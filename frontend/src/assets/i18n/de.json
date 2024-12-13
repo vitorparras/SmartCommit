@@ -34,5 +34,12 @@
   "SELECT_README_FILE": "Wählen Sie die README-Datei in Ihrem Repository-Ordner aus",
   "SELECT_README": "README auswählen",
   "CONFIGURATION_SUBTITLE": "Konfigurieren Sie die Optionen, um die Erstellung von Commit-Nachrichten anzupassen.",
-  "RESULT_SUBTITLE": "Nachricht erfolgreich generiert! Kopieren Sie sie, um sie in Ihren Commits zu verwenden."
+  "RESULT_SUBTITLE": "Nachricht erfolgreich generiert! Kopieren Sie sie, um sie in Ihren Commits zu verwenden.",
+  "ENTER_API_KEY": "API-Schlüssel eingeben",
+  "API_KEY_DESCRIPTION": "Bitte geben Sie Ihren API-Schlüssel für das ausgewählte KI-Modell ein.",
+  "API_KEY_PLACEHOLDER": "Ihr API-Schlüssel",
+  "API_KEY": "API-Schlüssel",
+  "TOGGLE_VISIBILITY": "API-Schlüssel Sichtbarkeit umschalten",
+  "SUBMIT": "Senden",
+  "CANCEL": "Abbrechen"
 }

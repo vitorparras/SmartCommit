@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-api-key-modal',
@@ -8,11 +9,24 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ApiKeyModalComponent {
   apiKey: string = '';
+  showKey: boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<ApiKeyModalComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<ApiKeyModalComponent>,
+    public translate: TranslateService
+  ) {
+    // Remove default dialog padding
+    this.dialogRef.addPanelClass('api-key-dialog');
+  }
+
+  toggleVisibility() {
+    this.showKey = !this.showKey;
+  }
 
   onSubmit() {
-    this.dialogRef.close(this.apiKey);
+    if (this.apiKey.trim()) {
+      this.dialogRef.close(this.apiKey);
+    }
   }
 
   onCancel() {

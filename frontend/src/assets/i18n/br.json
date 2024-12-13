@@ -34,5 +34,12 @@
   "SELECT_README_FILE": "Escolha o arquivo README na pasta do seu repositório",
   "SELECT_README": "Selecionar README",
   "CONFIGURATION_SUBTITLE": "Configure as opções para personalizar a geração das mensagens de commit.",
-  "RESULT_SUBTITLE": "Mensagem gerada com sucesso! Copie-a para usar em seus commits."
+  "RESULT_SUBTITLE": "Mensagem gerada com sucesso! Copie-a para usar em seus commits.",
+  "ENTER_API_KEY": "Insira a Chave de API",
+  "API_KEY_DESCRIPTION": "Por favor, insira sua chave de API para o modelo de IA selecionado.",
+  "API_KEY_PLACEHOLDER": "Sua chave de API",
+  "API_KEY": "Chave de API",
+  "TOGGLE_VISIBILITY": "Alternar visibilidade da chave de API",
+  "SUBMIT": "Enviar",
+  "CANCEL": "Cancelar"
 }

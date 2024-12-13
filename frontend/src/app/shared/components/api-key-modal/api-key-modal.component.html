@@ -1,12 +1,53 @@
-<h2 mat-dialog-title>Enter API Key</h2>
-<mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>API Key</mat-label>
-    <input matInput [(ngModel)]="apiKey" type="password">
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!apiKey">Submit</button>
-</mat-dialog-actions>
+<div class="api-key-modal">
+  <div class="modal-header">
+    <div class="header-icon">
+      <mat-icon>vpn_key</mat-icon>
+    </div>
+    <div class="header-content">
+      <h2>{{ 'ENTER_API_KEY' | translate }}</h2>
+      <p>{{ 'API_KEY_DESCRIPTION' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-field">
+      <label for="apiKey">{{ 'API_KEY' | translate }}</label>
+      <div class="input-container">
+        <input
+          id="apiKey"
+          type="password"
+          [(ngModel)]="apiKey"
+          [placeholder]="'API_KEY_PLACEHOLDER' | translate"
+          class="api-key-input"
+        >
+        <button 
+          class="toggle-visibility" 
+          type="button" 
+          (click)="toggleVisibility()"
+          [attr.aria-label]="'TOGGLE_VISIBILITY' | translate"
+        >
+          <mat-icon>{{ showKey ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button 
+      type="button" 
+      class="btn-cancel" 
+      (click)="onCancel()"
+    >
+      {{ 'CANCEL' | translate }}
+    </button>
+    <button 
+      type="submit" 
+      class="btn-submit" 
+      [disabled]="!apiKey.trim()" 
+      (click)="onSubmit()"
+    >
+      {{ 'SUBMIT' | translate }}
+    </button>
+  </div>
+</div>
 

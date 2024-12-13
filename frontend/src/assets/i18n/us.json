@@ -34,5 +34,13 @@
   "SELECT_README_FILE": "Choose the README file in your repository folder",
   "SELECT_README": "Select README",
   "CONFIGURATION_SUBTITLE": "Configure the options to customize the generation of commit messages.",
-  "RESULT_SUBTITLE": "Message successfully generated! Copy it to use in your commits."
+  "RESULT_SUBTITLE": "Message successfully generated! Copy it to use in your commits.",
+  "ENTER_API_KEY": "Enter API Key",
+  "API_KEY_DESCRIPTION": "Please enter your API key for the selected AI model.",
+  "API_KEY_PLACEHOLDER": "Your API key",
+  "API_KEY": "API Key",
+  "TOGGLE_VISIBILITY": "Toggle API key visibility",
+  "SUBMIT": "Submit",
+  "CANCEL": "Cancel"
+
 }
