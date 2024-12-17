@@ -1,33 +1,112 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API para geração de commits, tradução e validação de repositórios.",
-        "title": "SmartCommit API",
+        "description": "This is a sample server for generating commit messages using AI.",
+        "title": "Commit AI API",
         "contact": {},
         "version": "1.0"
     },
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
-        "/validate": {
+        "/ai-models": {
             "get": {
-                "description": "Verifica se o caminho fornecido é válido e contém um repositório Git",
-                "consumes": [
+                "description": "Obter uma lista de modelos de IA disponíveis para geração de commit",
+                "produces": [
                     "application/json"
+                ],
+                "summary": "Obter modelos de IA disponíveis",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/commits": {
+            "get": {
+                "description": "Obter todos os commits gerados",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Obter todos os commits",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/domain.Commit"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/generate": {
+            "post": {
+                "description": "Gerar uma mensagem de commit usando IA com configuração específica e arquivo README",
+                "consumes": [
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "Validation"
-                ],
-                "summary": "Valida um repositório local",
+                "summary": "Gerar uma mensagem de commit",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Caminho do repositório",
-                        "name": "path",
-                        "in": "query",
+                        "description": "Descrição do commit",
+                        "name": "description",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Autor do commit",
+                        "name": "author",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Formato do commit",
+                        "name": "format",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Arquivo README.md",
+                        "name": "readmeFile",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Modelo de IA",
+                        "name": "aiModel",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Estilo do commit",
+                        "name": "style",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Idioma do commit",
+                        "name": "language",
+                        "in": "formData",
                         "required": true
                     }
                 ],
@@ -35,19 +114,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/validation.ValidationResult"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.ValidationError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handlers.ValidationError"
+                            "$ref": "#/definitions/domain.Commit"
                         }
                     }
                 }
@@ -55,27 +122,36 @@
         }
     },
     "definitions": {
-        "handlers.ValidationError": {
+        "domain.Commit": {
             "type": "object",
             "properties": {
-                "error": {
+                "author": {
+                    "type": "string"
+                },
+                "config": {
+                    "$ref": "#/definitions/domain.CommitConfig"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 }
             }
         },
-        "validation.ValidationResult": {
+        "domain.CommitConfig": {
             "type": "object",
             "properties": {
-                "currentBranch": {
+                "aiModel": {
                     "type": "string"
                 },
-                "error": {
+                "format": {
                     "type": "string"
                 },
-                "isValid": {
-                    "type": "boolean"
+                "language": {
+                    "type": "string"
                 },
-                "lastModified": {
+                "style": {
                     "type": "string"
                 }
             }

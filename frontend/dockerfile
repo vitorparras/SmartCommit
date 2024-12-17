@@ -1,0 +1,29 @@
+# Stage 1: Build the Angular application
+FROM node:20 AS build
+
+WORKDIR /app
+
+# Instala dependências
+COPY package.json package-lock.json ./
+RUN npm ci --quiet
+
+# Compila o projeto
+COPY . .
+RUN npm run build --prod
+
+# Stage 2: Usar http-server para servir os arquivos estáticos
+FROM node:20 AS serve
+
+WORKDIR /app
+
+# Instala o http-server globalmente
+RUN npm install -g http-server
+
+# Copia a pasta dist/frontend gerada no build
+COPY --from=build /app/dist/frontend .
+
+# Expor a porta 8080
+EXPOSE 8090
+
+# Comando para iniciar o servidor
+CMD ["http-server", ".", "-p", "8090", "-c-1"]

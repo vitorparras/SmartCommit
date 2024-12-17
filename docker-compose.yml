@@ -1,11 +1,64 @@
-version: "3.8"
+version: '3.8'
 
 services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    depends_on:
+      - backend
+    networks:
+      - smartcommit-network
+    restart: unless-stopped
+
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=smartcommit
+      - DB_PASSWORD=smartcommitpassword
+      - DB_NAME=smartcommit
+      - DB_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - AI_API_KEY=${AI_API_KEY}
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - smartcommit-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=smartcommit
+      - POSTGRES_PASSWORD=smartcommitpassword
+      - POSTGRES_DB=smartcommit
     volumes:
-      - ./backend:/app
-    command: CompileDaemon --build="go build -o backend ." --command="./backend"
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - smartcommit-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:6
+    volumes:
+      - redis-data:/data
+    networks:
+      - smartcommit-network
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  smartcommit-network:
+    driver: bridge
