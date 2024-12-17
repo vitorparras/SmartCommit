@@ -99,7 +99,7 @@ func (h *HTTPHandler) handleGetCommits(w http.ResponseWriter, r *http.Request) {
 // @Summary Obter modelos de IA disponíveis
 // @Description Obter uma lista de modelos de IA disponíveis para geração de commit
 // @Produce json
-// @Success 200 {array} string
+// @Success 200 {array} domain.Model
 // @Router /ai-models [get]
 func (h *HTTPHandler) handleGetAIModels(w http.ResponseWriter, r *http.Request) {
 	models := h.commitService.GetAvailableAIModels()

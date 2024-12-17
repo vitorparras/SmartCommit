@@ -25,11 +25,12 @@ func (a *AIAdapter) GenerateCommitMessage(description string, readmeContent stri
 	), nil
 }
 
-func (a *AIAdapter) GetAvailableModels() []string {
-	return []string{
-		"gpt-3.5-turbo",
-		"gpt-4",
-		"codex",
-		"claude-2",
+func (a *AIAdapter) GetAvailableModels() []domain.Model {
+	return []domain.Model{
+		{Id: 2, Name: "gpt-3.5-turbo", Type: domain.Online},
+		{Id: 3, Name: "gpt-4", Type: domain.Online},
+		{Id: 4, Name: "codex", Type: domain.Online},
+		{Id: 5, Name: "claude-2", Type: domain.Online},
+		{Id: 6, Name: "local-llama", Type: domain.Offline},
 	}
 }

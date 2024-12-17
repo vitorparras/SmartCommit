@@ -47,7 +47,7 @@ func (s *CommitService) GetAllCommits() ([]domain.Commit, error) {
 	return s.repo.GetCommits()
 }
 
-func (s *CommitService) GetAvailableAIModels() []string {
+func (s *CommitService) GetAvailableAIModels() []domain.Model {
 	return s.ai.GetAvailableModels()
 }
 
