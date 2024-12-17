@@ -1,0 +1,160 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server for generating commit messages using AI.",
+        "title": "Commit AI API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/ai-models": {
+            "get": {
+                "description": "Obter uma lista de modelos de IA disponíveis para geração de commit",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Obter modelos de IA disponíveis",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/commits": {
+            "get": {
+                "description": "Obter todos os commits gerados",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Obter todos os commits",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/domain.Commit"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/generate": {
+            "post": {
+                "description": "Gerar uma mensagem de commit usando IA com configuração específica e arquivo README",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gerar uma mensagem de commit",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Descrição do commit",
+                        "name": "description",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Autor do commit",
+                        "name": "author",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Formato do commit",
+                        "name": "format",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Arquivo README.md",
+                        "name": "readmeFile",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Modelo de IA",
+                        "name": "aiModel",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Estilo do commit",
+                        "name": "style",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Idioma do commit",
+                        "name": "language",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.Commit"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.Commit": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "config": {
+                    "$ref": "#/definitions/domain.CommitConfig"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.CommitConfig": {
+            "type": "object",
+            "properties": {
+                "aiModel": {
+                    "type": "string"
+                },
+                "format": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "style": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
